@@ -1,0 +1,14 @@
+{% extends 'layout/default.html' %}
+{% block title %}Удалить {{ post_name }}{% endblock title %}
+{% load custom_filters %}
+{% block content %}
+<div class='title-container'>
+  <a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
+  <h1 class="title">Вы уверены что хотите удалить {{ post_name }}?</h1>
+</div>
+<h4>{{ post.title }}</h4>
+<form method="POST">
+    {% csrf_token %}
+      <input class="btn btn-primary" type="submit" value="Удалить">
+</form>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'layout/default.html' %}
+{% load custom_filters %}
+{% block title %}{{ posts_name }}{% endblock title %}
+{% block content %}
+<span class='date'>{{ time_now|date:'d M Y'}}</span>
+<div class='all-news--but'>
+    <h1 class='all-news'>{{ posts_name }}
+        <div class='label-wrapper' ><span class='label'>{{ posts_num }}</span></div>
+    </h1>
+    {% if user.is_authenticated %}
+        {% if subscribed %}
+            <a href="{% url app_name|add:':unsubscribe' %}" class="btn btn-primary mini-btn">Отписаться от рассылки</a>
+        {% else %}    
+            <a href="{% url app_name|add:':subscribe' %}" class="btn btn-primary mini-btn">Подписаться на рассылку</a>
+        {% endif %}      
+    {% endif %}      
+</div>
+<form method="GET" class="search-form">
+    {{ filter.form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Поиск">
+</form>
+{% if posts %}
+    <hr>
+    {% for post in posts %}
+        <a href='{% url app_name|add:":post" post.id %}' class='text-decoration-none text-reset'>
+        <h4 class='list-titles'>{{ post.title }}</h4>
+        </a>    
+        <span class="list-datetime">{{ post.created_at|date:'d M Y \в H:i' }} от {{ post.user.username }}</span><br>
+        <span>{{ post.content|truncatechars:50 }}</span><br>
+        <hr> 
+    {% endfor %}
+{% else %}
+    <br><h2 class='empty'>Пусто!</h2><br>
+{% endif %}
+
+{% include 'parts/paginator.html' %}
+{% if app_name == 'announcements' or user_is_manager %}
+    <a class="btn btn-primary add-button" href="{% url app_name|add:':post_add' %}">Добавить {{ post_name }}</a>
+{% endif %} 
+{% endblock content %}

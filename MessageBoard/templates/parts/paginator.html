@@ -1,0 +1,21 @@
+{% if is_paginated %}
+    {% load spurl %}
+    <div class="page-nav">
+    {% if page_obj.has_previous %}
+        <a href="{% spurl query=request.GET set_query='page=1'%}" class="btn btn-primary">В начало</a>
+        <a href="{% spurl query=request.GET set_query='page={{ page_obj.previous_page_number }}'%}" class="btn btn-primary"><<<</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a class="btn btn-primary current">{{ num }}</a>
+        {% elif page_obj.number|add:'3' > num and num > page_obj.number|add:'-3' %}
+            <a href="{% spurl query=request.GET set_query='page={{ num }}'%}" class="btn btn-primary">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <a href="{% spurl query=request.GET set_query='page={{ page_obj.next_page_number }}'%}" class="btn btn-primary">>>></a>
+
+        <a href="{% spurl query=request.GET set_query='page={{ page_obj.paginator.num_pages }}'%}" class="btn btn-primary">В конец</a>
+    {% endif %}
+    </div>
+{% endif %}

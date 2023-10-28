@@ -1,0 +1,15 @@
+{% extends 'layout/default.html' %}
+{% block title %}Изменить {{ post_name }}{% endblock title %}
+{% load custom_filters %}
+{% block content %}
+<div class='title-container'>
+    <a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
+    <h1 class="title">Отредактируйте {{ post_name }}</h1>
+</div>
+
+<form method="POST" class="create-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-success btn-primary but-bot" type="submit" value="Изменить">
+ </form>
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends 'layout/default.html' %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Verify Your Email Address" %}{% endblock head_title %}
+
+{% block content %}
+    <h1>{% trans "Verify Your Email Address" %}</h1>
+
+    <p>{% blocktrans %}Мы отправили вам электронное письмо с кодом подтверждения. Введите его в поле ниже, чтобы завершить процесс регистрации. Если вы не видите письмо с кодом подтверждения, проверьте папку со спамом. Пожалуйста, свяжитесь с нами, если вы не получили электронное письмо в течение нескольких минут...{% endblocktrans %}</p>
+    {% if request.META.HTTP_REFERER == request.build_absolute_uri %}
+        <p class="red">Введен неверный код. Повторите ввод.</p> 
+    {% endif %}
+    <form method="POST" class="short-form">
+        {% csrf_token %}
+        <input class="form-control short-field" type="text" name="code" placeholder="Ваш код" maxlength="6" required/>
+        <button class="btn btn-primary" type="submit">Отправить</button>
+    </form>
+{% endblock content %}

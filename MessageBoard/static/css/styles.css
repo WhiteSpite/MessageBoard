@@ -1,0 +1,297 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+p {
+    margin-bottom: 0;
+}
+
+
+.label-wrapper {
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background-color: #ffc008;
+    display: inline-flex;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0px;
+}
+
+.label {
+    color: black;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.page-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.category, .category:active, .category:visited {
+    background-color: #323638e6;
+    color: #e5e4e2;
+    border-radius: 20px;
+    padding: 3px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+        background-color: #FFC007;
+        color: black;
+    }
+}
+
+.date {
+    display: block;
+}
+
+.all-news {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.all-news--but {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.btn-primary {
+    background-color: #212529;
+    align-self: center;
+    border-color: white;
+    &:hover {
+        background-color: #FFC007;
+        color: black;
+        border-color: #FFC007;
+        &:active {
+            background-color: #FFC007;
+            color: black;
+            border-color: #FFC007;
+            box-shadow: 0 0 10px #FFC007
+        };  
+    }
+    &.current {
+        background-color: #FFC007;
+    }
+}
+
+.search-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > input {
+        width: calc(19% - 40px);
+    }
+}
+
+.create-form {
+    display: grid;
+}
+
+.but-bot {
+    align-self: flex-end;
+}
+
+.add-button {
+    width: 100%;
+}
+
+.form-control {
+    margin-bottom: 0px;
+    
+}
+
+.floatright {
+    float: right;
+}
+
+.form-field {
+    max-width: 400px;
+}
+
+.p-3.text-bg-dark {
+    margin-bottom: 60px;
+}
+
+.title {
+    /* text-align: center; */
+    margin-bottom: 50px;
+}
+
+.title-container {
+    position: relative;
+}
+
+.back-button.back-button {
+    position: absolute;
+    top: 6px;
+    left: -47px;
+    color: #FFC007;
+    padding: 0 12px;
+    font-size: 31px;
+    margin: 0;
+    &:hover {
+        color: black;
+    }
+}
+
+
+.user:hover::before {
+    content: 'Выйти из ';
+}
+
+.img_post, .video_post {
+    box-shadow: 0 0 30px -10px black;
+    margin: 5% 0;
+    width: 98%;
+    display: block;
+
+}
+
+nav {
+    height: inherit;
+    display: flex;
+    justify-content: center;
+}
+
+header li {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #E0E0E0;
+    transition: 1s;
+    height: 100%;
+}
+
+header li:hover {
+    padding: 0 0.3vw;
+    transition: 0.5s;
+}
+
+.list-titles {
+    margin-bottom: 0;
+}
+
+.list-datetime {
+    opacity: 0.5;
+    font-size: 17px;
+}
+
+.green {
+    background-color: green;
+    &:hover {
+        background-color: green;
+        border-color: green;
+        cursor: default;
+        box-shadow: none;
+        color: white;
+        &:active {
+            background-color: green;
+            border-color: green;
+            cursor: default;
+            box-shadow: none;
+            color: white;
+        }
+    }
+}
+
+.list-button {
+    float: right;
+}
+
+.list-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+
+}
+
+.responses_title {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.container-redact-button {
+    height: 70px;
+    margin-top: 50px;
+}
+
+.redact-button {
+    width: 49%;
+}
+
+.response-button {
+    width: 100%;
+}
+
+.btn-primary, .form-control {
+    margin-bottom: 10px;
+}
+
+.mini-btn {
+    height: 29px;
+    padding: 0px 9px;
+    font-size: 17px;
+    vertical-align: bottom;
+    margin-bottom: 0;
+}
+
+.empty {
+    text-align: center;
+}
+
+.red {
+    color: red;
+    margin-top: 8px;
+}
+
+.short-field {
+    display: inline;
+    text-align: center;
+    vertical-align: top;
+    width: 130px;
+}
+
+.short-form {
+    margin-top: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 991px) {
+    form:not(.short-form) {
+        display: grid;
+        justify-content: inherit;
+        & > input {
+            width: 100%;
+        }
+    }
+}
+
+

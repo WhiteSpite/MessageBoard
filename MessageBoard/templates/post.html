@@ -1,0 +1,74 @@
+{% extends 'layout/default.html' %}
+{% load custom_filters %}
+{% block title %}{{ post.title }}{% endblock title %}
+{% block content %}
+<div class='title-container'>
+<a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
+<h1>{{ post.title }}</h1><br>
+</div>
+<span>{{ post.created_at|date:'d M Y \в H:i' }} от {{ post.user.username }}</span>
+{% if app_name == 'announcements' %}
+    <p>Категория: 
+        <a href="{% url app_name|add:':posts' %}?category={{ post.category }}" class='category'>{{ post.get_category_display }}</a>
+    </p>
+{% endif %}
+<p>{{ post.content }}</p>
+
+{% if post.image %}
+    <a href="{{ post.image.url }}"><img src="{{ post.image.url }}" alt="img" class="img_post"></a>
+{% endif %}
+{% if post.video %}
+    <video src="{{ post.video.url }}" class="video_post" controls></video>
+{% endif %}
+{% if user_is_owner %}
+    <div class="container-redact-button">
+        <a href='{% url app_name|add:":post_edit" post.id %}' class="btn btn-primary redact-button">Изменить</a>
+        <a href='{% url app_name|add:":post_delete" post.id %}' class="btn btn-primary redact-button">Удалить</a>
+    </div>
+{% endif %}
+
+{% if app_name == 'announcements' %}
+    {% if post.responses.all %}
+        <h2 class='responses_title'>Отклики</h2>
+        {% if user_is_owner %}
+            {% for response in page_obj %}
+                <h5 class='list-titles'>{{ response.user.username }} <span class="list-datetime">{{ response.created_at|date:'d M Y \a\t H:i' }}</span></h5>
+                <p>{{ response.text }}</p>
+                <div class="list-buttons">
+                    {% if not response.is_accepted %}
+                        <a href="{% url 'announcements:accept_response' %}?response_id={{ response.id }}" class="btn btn-primary list-button">Принять</a>
+                    {% else %}
+                        <a class="btn btn-primary list-button green">Принято</a>
+                    {% endif %}
+                    <a href="{% url 'announcements:remove_response' %}?response_id={{ response.id }}" class="btn btn-primary list-button">Отклонить</a>
+                </div>
+                <hr> 
+            {% endfor %}
+        {% else %}
+            {% for response in page_obj %}
+                <h5 class='list-titles'>{{ response.user.username }} <span class="list-datetime">{{ response.created_at|date:'d M Y \a\t H:i' }}</span></h5>
+                <p>{{ response.text }}</p>
+                <hr>
+            {% endfor %}
+        {% endif %}
+        {% include 'parts/paginator.html' %} 
+        {% if user_is_owner %}
+            <a class="btn btn-primary response-button" href="{% url app_name|add:':remove_all_responses_by_post' %}?announcement_id={{ post.id }}">Отклонить все</a>
+        {% endif %} 
+    {% else %}
+        <h2 class='responses_title'>Откликов нет</h2>
+    {% endif %}
+    {% if not user_is_owner %}
+        {% if not response_by_user_exist %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="text" class="form-control" placeholder="Введите текст..." maxlength="300" required />
+            <input class="btn btn-primary response-button" type="submit" value="Оставить отклик" />
+        </form> 
+        {% else %}
+        <a href="{% url 'announcements:remove_response' %}?response_id={{ response_by_user.id }}" class="btn btn-primary response-button">Отозвать отклик</a>            
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% endblock content %}

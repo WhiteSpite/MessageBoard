@@ -1,0 +1,37 @@
+{% extends 'layout/default.html' %}
+{% load custom_filters %}
+{% block title %}{{ posts_name }}{% endblock title %}
+{% block content %}
+<span class='date'>{{ time_now|date:'d M Y'}}</span>
+<div class='all-news--but'>
+<h1 class='all-news'>{{ posts_name }}
+<div class='label-wrapper' ><span class='label'>{{ posts_num }}</span></div>
+</h1></div>
+<form method="GET" class="search-form">
+    {{ filter.form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Поиск">
+</form>
+{% if posts %}
+    <hr>
+    {% for post in posts %} 
+        <h5 class='list-titles'>{{ post.user.username }} откликнулся на {{ post.announcement|truncatechars:70 }}</h5>
+        <span class="list-datetime">{{ post.created_at|date:'d M Y \a\t H:i' }}</span><br>
+        <span>{{ post.text }}</span>
+        <div class="list-buttons">
+        {% if not post.is_accepted %}
+            <a href="{% url 'announcements:accept_response' %}?response_id={{ post.id }}" class="btn btn-primary list-button">Принять</a>
+        {% else %}
+            <a href="#" class="btn btn-primary list-button green">Принято</a>
+        {% endif %}
+        <a href="{% url 'announcements:remove_response' %}?response_id={{ post.id }}" class="btn btn-primary list-button">Отклонить</a>
+        </div>
+        <hr> 
+    {% endfor %}
+    <a class="btn btn-primary response-button" href="{% url 'announcements:remove_all_responses' %}">Отклонить абсолютно все</a>
+{% else %}
+    <br><h2 class='empty'>Пусто!</h2><br>
+{% endif %}
+
+{% include 'parts/paginator.html' %}
+
+{% endblock content %}
